@@ -11,4 +11,16 @@ module.exports =
         }
         res.render('template/struktur', dataview)
     },
+
+
+
+    form_tambah: async function(req,res) {
+        let dataview = {
+            konten      : 'master-produk/form-tambah',
+            uri_segment : req.path.split('/'),
+            info_error  : null,
+            kategori    : await m_produk.get_semua_kategori()
+        }
+        res.render('template/struktur', dataview)
+    },
 }
