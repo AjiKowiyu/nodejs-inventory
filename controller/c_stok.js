@@ -19,17 +19,28 @@ module.exports =
 
     proses_stok_masuk: async function(req,res) {
         try {
-            let insert      = await m_stok.input_stok_masuk(req)
-            let isi_notif   = `berhasil input stok masuk`
+            let stok_terakhir   = await m_stok.ambil_stoksisa_terakhir(req.body.form_produk) // cek sisa di database
+            let sisa_terakhir   = 0
+
+            if (stok_terakhir.length > 0) {
+                sisa_terakhir = stok_terakhir[0].stok_sisa //ambil objek stok_sisa
+            }
+            
+            let hasil_akhir     = sisa_terakhir + Number(req.body.form_jumlah) //jumlahkan dengan stok masuk yg diinput
+
+            let insert          = await m_stok.input_stok_masuk(req, hasil_akhir)
+            let isi_notif       = `berhasil input stok masuk`
             if (insert.affectedRows > 0) {
                 res.redirect(`/stok-masuk?note=sukses&pesan=${isi_notif}`)
             }
         } catch (error) {
+            console.log(error)
             let dataview = {
                 konten      : 'stok/form-stok-masuk',
                 req         : req,
                 uri_segment : req.path.split('/'),
                 info_error  : error,
+                produk      : await m_produk.get_semua_produk()
             }
             res.render('template/struktur', dataview)
         }
