@@ -61,6 +61,9 @@ app.post('/user/proses-simpan', cek_login, c_user.proses_simpan)
 app.get('/stok-masuk', cek_login, c_stok.form_stok_masuk)
 app.post('/stok-masuk/proses-simpan', cek_login, c_stok.proses_stok_masuk)
 
+app.get('/stok-keluar', cek_login, c_stok.form_stok_keluar)
+app.post('/stok-keluar/proses-simpan', cek_login, c_stok.proses_stok_keluar)
+
 
 
 // jalankan server

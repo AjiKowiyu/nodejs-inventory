@@ -57,4 +57,32 @@ module.exports =
 
 
 
+    input_stok_keluar: function(req, hasil_akhir) {
+        let data    = {
+            kode_produk : req.body.form_produk,
+            stok_masuk  : 0,
+            stok_keluar : -req.body.form_jumlah,
+            stok_sisa   : hasil_akhir,
+            keterangan  : req.body.form_keterangan,
+            dibuat_oleh : req.session.user.id,
+            dibuat_kapan: moment().format('YYYY-MM-DD HH:mm:ss')
+        }
+        let sql = mysql.format(
+            `INSERT INTO stok SET ?`,
+            [data]
+        )
+
+        return new Promise( (resolve,reject)=>{
+            db.query(sql, function(errorSql, hasil) {
+                if (errorSql) {
+                    reject(errorSql)
+                } else {
+                    resolve(hasil)
+                }
+            })
+        })
+    },
+
+
+
 }
