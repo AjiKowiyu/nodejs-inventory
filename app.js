@@ -14,6 +14,7 @@ const c_dashboard       = require('./controller/c_dashboard')
 const c_user            = require('./controller/c_user')
 const c_master_produk   = require('./controller/c_master_produk')
 const c_stok            = require('./controller/c_stok')
+const c_laporan         = require('./controller/c_laporan')
 const cek_login         = c_auth.cek_login
 
 
@@ -63,6 +64,8 @@ app.post('/stok-masuk/proses-simpan', cek_login, c_stok.proses_stok_masuk)
 
 app.get('/stok-keluar', cek_login, c_stok.form_stok_keluar)
 app.post('/stok-keluar/proses-simpan', cek_login, c_stok.proses_stok_keluar)
+
+app.get('/laporan', cek_login, c_laporan.allstok)
 
 
 
